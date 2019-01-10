@@ -71,6 +71,7 @@ public class SignInActivity extends HelperActivity implements View.OnClickListen
                     launch(UsersList.class);
                     FancyToast.makeText(SignInActivity.this,username.getText()+" Login successsfully",FancyToast.LENGTH_LONG,
                             FancyToast.SUCCESS,true).show();
+                    finish();
                 }else{
                     showToast("error:"+e.getMessage());
                 }

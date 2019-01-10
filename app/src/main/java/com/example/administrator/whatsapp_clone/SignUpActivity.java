@@ -20,6 +20,18 @@ import me.rohanpeshkar.helper.HelperActivity;
 import me.rohanpeshkar.helper.HelperUtils;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
+//public class ParseErrorHandler{
+//    public static void handleParseError(ParseException e){
+//        if(e.getCode() == ParseException.INVALID_SESSION_TOKEN){
+//            handleInvalidSessionToken();
+//        }
+//    }
+//    private static void handleInvalidSessionToken(){
+//        startActivityForResult(new Parse)
+//    }
+//}
+
+
 public class SignUpActivity extends HelperActivity implements View.OnClickListener {
 
     @BindView(R.id.signupEmail)
@@ -67,8 +79,8 @@ public class SignUpActivity extends HelperActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.signupactivitySignUpButton:
                 StatesConfigFactory.Companion.intialize().initDefaultViews();
-                StatesConfigFactory.Companion.intialize().addStateView(1,R.layout.activity_sign_up);
-                StateExecuterKt.setState(v,StatesConstants.LOADING_STATE);
+                StatesConfigFactory.Companion.intialize().addStateView(1, R.layout.activity_sign_up);
+                StateExecuterKt.setState(v, StatesConstants.LOADING_STATE);
                 singningUpTheUserToServer(v);
                 HelperUtils.logInfo("inside case");
                 break;
@@ -87,15 +99,16 @@ public class SignUpActivity extends HelperActivity implements View.OnClickListen
         parseUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
-                if(e == null){
+                if (e == null) {
                     launch(UsersList.class);
-                    FancyToast.makeText(SignUpActivity.this,"Sign up successfully ",FancyToast.LENGTH_LONG
-                    ,FancyToast.SUCCESS,true).show();
-                }else{
-                    showToast("error signing");
+                    FancyToast.makeText(SignUpActivity.this, "Sign up successfully ", FancyToast.LENGTH_LONG
+                            , FancyToast.SUCCESS, true).show();
+                } else {
+                    showToast("error signing" + e.getMessage());
                 }
-                StateExecuterKt.setState(v,StatesConstants.NORMAL_STATE);
+                StateExecuterKt.setState(v, StatesConstants.NORMAL_STATE);
             }
         });
     }
+
 }
