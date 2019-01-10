@@ -3,6 +3,8 @@ package com.example.administrator.whatsapp_clone;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,9 +24,10 @@ import butterknife.ButterKnife;
 import me.rohanpeshkar.helper.HelperActivity;
 import me.rohanpeshkar.helper.HelperUtils;
 
-public class UsersList extends HelperActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class UsersList extends HelperActivity implements SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener {
     private ArrayAdapter arrayAdapter;
     private ArrayList arrayList;
+    private static String receiver;
 
     @BindView(R.id.usersListView)
     ListView listView;
@@ -52,6 +55,7 @@ public class UsersList extends HelperActivity implements SwipeRefreshLayout.OnRe
         arrayList = new ArrayList();
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         swipeRefreshLayout.setOnRefreshListener(this);
+        listView.setOnItemClickListener(this);
         getNamesOfAllUsers();
     }
 
@@ -125,4 +129,15 @@ public class UsersList extends HelperActivity implements SwipeRefreshLayout.OnRe
             swipeRefreshLayout.setRefreshing(false);
         }
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        receiver = arrayList.get(position).toString();
+        launch(MessageActivity.class);
+
+    }
+    public static String getReceiverName(){
+        return receiver;
+    }
+
 }
